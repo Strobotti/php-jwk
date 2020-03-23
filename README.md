@@ -1,2 +1,2 @@
 # php-jwk
-A small PHP library to handle JWK (Json Web Key)
+A small PHP library to handle JWKs (Json Web Keys)
