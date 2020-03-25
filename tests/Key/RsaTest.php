@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Strobotti\JWK\Tests;
+namespace Strobotti\JWK\Key\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Strobotti\JWK\Key;
+use Strobotti\JWK\Key\Rsa;
 
 final class KeyTest extends TestCase
 {
@@ -17,14 +17,14 @@ final class KeyTest extends TestCase
      */
     public function testCreateFromJSON(array $expected, string $input): void
     {
-        $key = Key::createFromJSON($input);
+        $key = Rsa::createFromJSON($input);
 
         static::assertSame($expected['kty'], $key->getKeyType());
         static::assertSame($expected['kid'], $key->getKeyId());
         static::assertSame($expected['use'], $key->getPublicKeyUse());
         static::assertSame($expected['alg'], $key->getAlgorithm());
-        static::assertSame($expected['n'], $key->getRsaModulus());
-        static::assertSame($expected['e'], $key->getRsaExponent());
+        static::assertSame($expected['n'], $key->getModulus());
+        static::assertSame($expected['e'], $key->getExponent());
     }
 
     /**

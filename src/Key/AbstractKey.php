@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Strobotti\JWK;
+namespace Strobotti\JWK\Key;
 
 /**
  * @package Strobotti\JWK
@@ -10,15 +10,8 @@ namespace Strobotti\JWK;
  * @license https://opensource.org/licenses/MIT MIT
  * @link    https://github.com/Strobotti/php-jwk
  */
-class Key implements \JsonSerializable
+abstract class AbstractKey implements KeyInterface
 {
-    public const KEY_TYPE_RSA = 'RSA';
-
-    public const PUBLIC_KEY_USE_SIGNATURE = 'sig';
-    public const PUBLIC_KEY_USE_ENCRYPTION = 'enc';
-
-    public const ALGORITHM_RS256 = 'RS256';
-
     /**
      * The key type.
      *
@@ -48,21 +41,7 @@ class Key implements \JsonSerializable
     private $alg;
 
     /**
-     * The modulus for the RSA public key.
-     *
-     * @var null|string
-     */
-    private $n;
-
-    /**
-     * The exponent for the RSA public key.
-     *
-     * @var null|string
-     */
-    private $e;
-
-    /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getKeyType(): string
     {
@@ -70,7 +49,7 @@ class Key implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getKeyId(): string
     {
@@ -78,7 +57,7 @@ class Key implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getPublicKeyUse(): string
     {
@@ -86,7 +65,7 @@ class Key implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getAlgorithm(): string
     {
@@ -94,27 +73,15 @@ class Key implements \JsonSerializable
     }
 
     /**
-     * Returns the modulus for the RSA public key.
+     * @param string $kty
      *
-     * @todo Implement different key types through inheritance
-     *
-     * @return null|string
+     * @return self
      */
-    public function getRsaModulus(): ?string
+    protected function setKeyType(string $kty): self
     {
-        return $this->n;
-    }
+        $this->kty = $kty;
 
-    /**
-     * Returns the exponent for the RSA public key.
-     *
-     * @todo Implement different key types through inheritance
-     *
-     * @return null|string
-     */
-    public function getRsaExponent(): ?string
-    {
-        return $this->e;
+        return $this;
     }
 
     /**
@@ -126,41 +93,53 @@ class Key implements \JsonSerializable
     {
         $assoc = [
             'kty' => $this->kty,
-            'kid' => $this->kid,
             'use' => $this->use,
             'alg' => $this->alg,
         ];
 
-        if (null !== $this->n) {
-            $assoc['n'] = $this->n;
-        }
-
-        if (null !== $this->e) {
-            $assoc['e'] = $this->e;
+        if (null !== $this->kid) {
+            $assoc['kid'] = $this->kid;
         }
 
         return $assoc;
     }
 
     /**
-     * @param string $json
+     * @param string            $json
+     * @param KeyInterface|null $prototype
      *
-     * @return static
+     * @return KeyInterface
      */
-    public static function createFromJSON(string $json): self
+    public static function createFromJSON(string $json, KeyInterface $prototype = null): KeyInterface
     {
         $assoc = \json_decode($json, true);
 
-        $instance = new static();
+        if ($prototype) {
+            $instance = clone $prototype;
+        } else {
+            $instance = new static();
+        }
 
         foreach ($assoc as $key => $value) {
             if (!\property_exists($instance, $key)) {
                 continue;
             }
 
-            $instance->{$key} = $value;
+            try {
+                $instance->{$key} = $value;
+            } catch (\Throwable $e) {
+                // only set what you can
+            }
         }
 
         return $instance;
+    }
+
+    /**
+     * @return false|string
+     */
+    public function __toString()
+    {
+        return json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
     }
 }

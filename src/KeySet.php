@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Strobotti\JWK;
 
+use Strobotti\JWK\Key\KeyInterface;
+
 /**
  * @package Strobotti\JWK
  * @author  Juha Jantunen <juha@strobotti.com>
@@ -13,9 +15,34 @@ namespace Strobotti\JWK;
 class KeySet implements \JsonSerializable
 {
     /**
-     * @var Key[]
+     * @var KeyFactory
+     */
+    private $keyFactory;
+
+    /**
+     * @var KeyInterface[]
      */
     private $keys = [];
+
+    /**
+     * KeySet constructor.
+     */
+    public function __construct()
+    {
+        $this->keyFactory = new KeyFactory();
+    }
+
+    /**
+     * @param KeyFactory $keyFactory
+     *
+     * @return self
+     */
+    public function setKeyFactory(KeyFactory $keyFactory): self
+    {
+        $this->keyFactory = $keyFactory;
+
+        return $this;
+    }
 
     /**
      * @param string $kid
@@ -30,9 +57,9 @@ class KeySet implements \JsonSerializable
     /**
      * @param string $kid
      *
-     * @return null|Key
+     * @return null|KeyInterface
      */
-    public function getKeyById(string $kid): ?Key
+    public function getKeyById(string $kid): ?KeyInterface
     {
         if (!$this->containsKey($kid)) {
             return null;
@@ -42,11 +69,11 @@ class KeySet implements \JsonSerializable
     }
 
     /**
-     * @param Key $key
+     * @param KeyInterface $key
      *
      * @return KeySet
      */
-    public function addKey(Key $key): self
+    public function addKey(KeyInterface $key): self
     {
         if ($this->containsKey($key->getKeyId())) {
             throw new \InvalidArgumentException(\sprintf(
@@ -77,20 +104,10 @@ class KeySet implements \JsonSerializable
     }
 
     /**
-     * @param string $json
-     *
-     * @return static
+     * @return false|string
      */
-    public static function createFromJSON(string $json): self
+    public function __toString()
     {
-        $assoc = \json_decode($json, true);
-
-        $instance = new static();
-
-        foreach ($assoc['keys'] as $key) {
-            $instance->addKey(Key::createFromJSON(\json_encode($key)));
-        }
-
-        return $instance;
+        return json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
     }
 }

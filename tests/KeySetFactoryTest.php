@@ -5,23 +5,28 @@ declare(strict_types=1);
 namespace Strobotti\JWK\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Strobotti\JWK\KeySet;
+use Strobotti\JWK\KeySetFactory;
 
-final class KeySetTest extends TestCase
+final class KeySetFactoryTest extends TestCase
 {
     /**
      * @param string $input
-     * @dataProvider provideJSONConversion
+     * @dataProvider provideCreateFromJSON
      */
-    public function testJSONConversion(string $input): void
+    public function testCreateFromJSON(string $input): void
     {
-        $keys = KeySet::createFromJSON($input);
+        $factory = new KeySetFactory();
+
+        $keys = $factory->createFromJSON($input);
         $json = $keys->jsonSerialize();
 
-        static::assertSame(\json_decode($input, true), $json);
+        static::assertEquals(\json_decode($input, true), $json);
     }
 
-    public function provideJSONConversion(): \Generator
+    /**
+     * @return \Generator
+     */
+    public function provideCreateFromJSON(): \Generator
     {
         yield [
             'input' => <<<'EOT'
