@@ -7,14 +7,16 @@ namespace Strobotti\JWK;
 use phpseclib\Crypt\RSA;
 use phpseclib\Math\BigInteger;
 use Strobotti\JWK\Key\KeyInterface;
+use Strobotti\JWK\Key\Rsa as RsaKey;
 use Strobotti\JWK\Util\Base64UrlConverter;
 use Strobotti\JWK\Util\Base64UrlConverterInterface;
 
 /**
- * @package Strobotti\JWK
  * @author  Juha Jantunen <juha@strobotti.com>
  * @license https://opensource.org/licenses/MIT MIT
- * @link    https://github.com/Strobotti/php-jwk
+ *
+ * @see    https://github.com/Strobotti/php-jwk
+ * @since 1.0.0
  */
 class KeyConverter
 {
@@ -32,18 +34,15 @@ class KeyConverter
     }
 
     /**
-     * @param KeyInterface $key
-     *
-     * @return string
+     * @since 1.0.0
      */
     public function keyToPem(KeyInterface $key): string
     {
-        if (!$key instanceof \Strobotti\JWK\Key\Rsa) {
+        if (!$key instanceof RsaKey) {
             throw new \InvalidArgumentException();
         }
 
-        /** @var \Strobotti\JWK\Key\Rsa $key */
-
+        /** @var RsaKey $key */
         $rsa = new RSA();
 
         $modulus = $this->base64UrlConverter->decode($key->getModulus(), true);

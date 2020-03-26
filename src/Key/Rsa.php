@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Strobotti\JWK\Key;
 
 /**
- * @package Strobotti\JWK
  * @author  Juha Jantunen <juha@strobotti.com>
  * @license https://opensource.org/licenses/MIT MIT
- * @link    https://github.com/Strobotti/php-jwk
+ *
+ * @see    https://github.com/Strobotti/php-jwk
+ * @since 1.0.0
  */
 class Rsa extends AbstractKey
 {
@@ -37,7 +38,7 @@ class Rsa extends AbstractKey
     /**
      * Returns the exponent for the RSA public key.
      *
-     * @return string
+     * @since 1.0.0
      */
     public function getExponent(): string
     {
@@ -47,7 +48,7 @@ class Rsa extends AbstractKey
     /**
      * Returns the modulus for the RSA public key.
      *
-     * @return string
+     * @since 1.0.0
      */
     public function getModulus(): string
     {
@@ -56,6 +57,8 @@ class Rsa extends AbstractKey
 
     /**
      * {@inheritdoc}
+     *
+     * @since 1.0.0
      */
     public function jsonSerialize(): array
     {
@@ -69,11 +72,13 @@ class Rsa extends AbstractKey
     /**
      * {@inheritdoc}
      *
+     * @since 1.0.0
+     *
      * @return self
      */
     public static function createFromJSON(string $json, KeyInterface $prototype = null): KeyInterface
     {
-        if (!$prototype instanceof Rsa) {
+        if (!$prototype instanceof self) {
             $prototype = new static();
         }
 

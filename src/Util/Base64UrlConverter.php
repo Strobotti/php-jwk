@@ -9,10 +9,11 @@ namespace Strobotti\JWK\Util;
  *
  * @see https://tools.ietf.org/html/rfc4648#section-5
  *
- * @package Strobotti\JWK
  * @author  Juha Jantunen <juha@strobotti.com>
  * @license https://opensource.org/licenses/MIT MIT
- * @link    https://github.com/Strobotti/php-jwk
+ *
+ * @see    https://github.com/Strobotti/php-jwk
+ * @since 1.0.0
  */
 class Base64UrlConverter implements Base64UrlConverterInterface
 {
@@ -31,6 +32,6 @@ class Base64UrlConverter implements Base64UrlConverterInterface
      */
     public function encode(string $data): string
     {
-        return rtrim(\strtr(\base64_encode($data), '+/', '-_'), '=');
+        return \rtrim(\strtr(\base64_encode($data), '+/', '-_'), '=');
     }
 }

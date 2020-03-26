@@ -7,10 +7,11 @@ namespace Strobotti\JWK;
 use Strobotti\JWK\Key\KeyInterface;
 
 /**
- * @package Strobotti\JWK
  * @author  Juha Jantunen <juha@strobotti.com>
  * @license https://opensource.org/licenses/MIT MIT
- * @link    https://github.com/Strobotti/php-jwk
+ *
+ * @see    https://github.com/Strobotti/php-jwk
+ * @since 1.0.0
  */
 class KeySet implements \JsonSerializable
 {
@@ -29,13 +30,21 @@ class KeySet implements \JsonSerializable
      */
     public function __construct()
     {
-        $this->keyFactory = new KeyFactory();
+        $this->setKeyFactory(new KeyFactory());
     }
 
     /**
-     * @param KeyFactory $keyFactory
+     * @since 1.0.0
      *
-     * @return self
+     * @return false|string
+     */
+    public function __toString()
+    {
+        return \json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
+    }
+
+    /**
+     * @since 1.0.0
      */
     public function setKeyFactory(KeyFactory $keyFactory): self
     {
@@ -45,9 +54,7 @@ class KeySet implements \JsonSerializable
     }
 
     /**
-     * @param string $kid
-     *
-     * @return bool
+     * @since 1.0.0
      */
     public function containsKey(string $kid): bool
     {
@@ -55,9 +62,7 @@ class KeySet implements \JsonSerializable
     }
 
     /**
-     * @param string $kid
-     *
-     * @return null|KeyInterface
+     * @since 1.0.0
      */
     public function getKeyById(string $kid): ?KeyInterface
     {
@@ -69,17 +74,14 @@ class KeySet implements \JsonSerializable
     }
 
     /**
-     * @param KeyInterface $key
+     * @since 1.0.0
      *
      * @return KeySet
      */
     public function addKey(KeyInterface $key): self
     {
         if ($this->containsKey($key->getKeyId())) {
-            throw new \InvalidArgumentException(\sprintf(
-                'Key with id `%s` already exists in the set',
-                $key->getKeyId()
-            ));
+            throw new \InvalidArgumentException(\sprintf('Key with id `%s` already exists in the set', $key->getKeyId()));
         }
 
         $this->keys[$key->getKeyId()] = $key;
@@ -88,7 +90,7 @@ class KeySet implements \JsonSerializable
     }
 
     /**
-     * @return array
+     * @since 1.0.0
      */
     public function jsonSerialize(): array
     {
@@ -101,13 +103,5 @@ class KeySet implements \JsonSerializable
         return [
             'keys' => \array_values($ret),
         ];
-    }
-
-    /**
-     * @return false|string
-     */
-    public function __toString()
-    {
-        return json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
     }
 }

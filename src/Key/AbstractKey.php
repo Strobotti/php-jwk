@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Strobotti\JWK\Key;
 
 /**
- * @package Strobotti\JWK
  * @author  Juha Jantunen <juha@strobotti.com>
  * @license https://opensource.org/licenses/MIT MIT
- * @link    https://github.com/Strobotti/php-jwk
+ *
+ * @see    https://github.com/Strobotti/php-jwk
+ * @since 1.0.0
  */
 abstract class AbstractKey implements KeyInterface
 {
@@ -41,7 +42,19 @@ abstract class AbstractKey implements KeyInterface
     private $alg;
 
     /**
+     * @since 1.0.0
+     *
+     * @return false|string
+     */
+    public function __toString()
+    {
+        return \json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
+    }
+
+    /**
      * {@inheritdoc}
+     *
+     * @since 1.0.0
      */
     public function getKeyType(): string
     {
@@ -50,6 +63,8 @@ abstract class AbstractKey implements KeyInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @since 1.0.0
      */
     public function getKeyId(): string
     {
@@ -58,6 +73,8 @@ abstract class AbstractKey implements KeyInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @since 1.0.0
      */
     public function getPublicKeyUse(): string
     {
@@ -66,6 +83,8 @@ abstract class AbstractKey implements KeyInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @since 1.0.0
      */
     public function getAlgorithm(): string
     {
@@ -73,19 +92,9 @@ abstract class AbstractKey implements KeyInterface
     }
 
     /**
-     * @param string $kty
+     * Returns an array presentation of the key.
      *
-     * @return self
-     */
-    protected function setKeyType(string $kty): self
-    {
-        $this->kty = $kty;
-
-        return $this;
-    }
-
-    /**
-     * Returns an array presentation of the key
+     * @since 1.0.0
      *
      * @return array An assoc to be passed to json_encode
      */
@@ -105,10 +114,7 @@ abstract class AbstractKey implements KeyInterface
     }
 
     /**
-     * @param string            $json
-     * @param KeyInterface|null $prototype
-     *
-     * @return KeyInterface
+     * @since 1.0.0
      */
     public static function createFromJSON(string $json, KeyInterface $prototype = null): KeyInterface
     {
@@ -136,10 +142,12 @@ abstract class AbstractKey implements KeyInterface
     }
 
     /**
-     * @return false|string
+     * @since 1.0.0
      */
-    public function __toString()
+    protected function setKeyType(string $kty): self
     {
-        return json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
+        $this->kty = $kty;
+
+        return $this;
     }
 }

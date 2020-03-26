@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Strobotti\JWK\Tests;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Strobotti\JWK\Key\KeyInterface;
 use Strobotti\JWK\Key\Rsa;
@@ -52,5 +53,22 @@ xwIDAQAB
 -----END PUBLIC KEY-----
 EOT
         ];
+    }
+
+    public function testUnsupportedKeyTypeRaisesException()
+    {
+        /** @var KeyInterface|MockObject $key */
+        $key = $this->getMockBuilder(KeyInterface::class)->getMock();
+
+        $converter = new KeyConverter();
+        try {
+            $converter->keyToPem($key);
+
+            $this->fail('converting an unsupported key to PEM should throw an exception');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertTrue(true);
+        } catch (\Throwable $e) {
+            $this->fail(sprintf('converting an unsupported key to PEM threw an unexpected exception %s', get_class($e)));
+        }
     }
 }
