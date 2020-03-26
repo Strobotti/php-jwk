@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Strobotti\JWK;
 
 /**
- * @package Strobotti\JWK
  * @author  Juha Jantunen <juha@strobotti.com>
  * @license https://opensource.org/licenses/MIT MIT
- * @link    https://github.com/Strobotti/php-jwk
+ *
+ * @see    https://github.com/Strobotti/php-jwk
+ * @since 1.0.0
  */
 class KeySetFactory
 {
@@ -22,13 +23,11 @@ class KeySetFactory
      */
     public function __construct()
     {
-        $this->keyFactory = new KeyFactory();
+        $this->setKeyFactory(new KeyFactory());
     }
 
     /**
-     * @param KeyFactory $keyFactory
-     *
-     * @return self
+     * @since 1.0.0
      */
     public function setKeyFactory(KeyFactory $keyFactory): self
     {
@@ -38,9 +37,7 @@ class KeySetFactory
     }
 
     /**
-     * @param string $json
-     *
-     * @return KeySet
+     * @since 1.0.0
      */
     public function createFromJSON(string $json): KeySet
     {
@@ -56,5 +53,4 @@ class KeySetFactory
 
         return $instance;
     }
-
 }

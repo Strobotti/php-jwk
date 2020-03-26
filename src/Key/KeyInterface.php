@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Strobotti\JWK\Key;
 
 /**
- * @package Strobotti\JWK
  * @author  Juha Jantunen <juha@strobotti.com>
  * @license https://opensource.org/licenses/MIT MIT
- * @link    https://github.com/Strobotti/php-jwk
+ *
+ * @see    https://github.com/Strobotti/php-jwk
+ * @since 1.0.0
  *
  * @method array jsonSerialize()
  */
@@ -24,35 +25,39 @@ interface KeyInterface extends \JsonSerializable
     public const ALGORITHM_RS256 = 'RS256';
 
     /**
-     * Gets the key type, ie. the value of the `kty` field
+     * Converts this key to a string.
      *
-     * @return string
+     * @since 1.0.0
+     *
+     * @return bool|string
+     */
+    public function __toString();
+
+    /**
+     * Gets the key type, ie. the value of the `kty` field.
+     *
+     * @since 1.0.0
      */
     public function getKeyType(): string;
 
     /**
-     * Gets the key id, ie. the value of the `kid` field
+     * Gets the key id, ie. the value of the `kid` field.
      *
-     * @return null|string
+     * @since 1.0.0
      */
     public function getKeyId(): ?string;
 
     /**
-     * Gets the public key use, ie. the value of the `use` field
+     * Gets the public key use, ie. the value of the `use` field.
      *
-     * @return string
+     * @since 1.0.0
      */
     public function getPublicKeyUse(): string;
 
     /**
-     * Gets the cryptographic algorithm used to sign the key, ie. the value of the `alg` field
+     * Gets the cryptographic algorithm used to sign the key, ie. the value of the `alg` field.
      *
-     * @return string
+     * @since 1.0.0
      */
     public function getAlgorithm(): string;
-
-    /**
-     * @return string|bool
-     */
-    public function __toString();
 }

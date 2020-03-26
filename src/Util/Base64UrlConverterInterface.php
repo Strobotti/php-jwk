@@ -9,29 +9,27 @@ namespace Strobotti\JWK\Util;
  *
  * @see https://tools.ietf.org/html/rfc4648#section-5
  *
- * @package Strobotti\JWK
  * @author  Juha Jantunen <juha@strobotti.com>
  * @license https://opensource.org/licenses/MIT MIT
- * @link    https://github.com/Strobotti/php-jwk
+ *
+ * @see    https://github.com/Strobotti/php-jwk
+ * @since 1.0.0
  */
 interface Base64UrlConverterInterface
 {
     /**
-     * Decodes Base64url formatted data to a string
+     * Decodes Base64url formatted data to a string.
      *
-     * @param string $data
-     * @param bool   $strict
+     * @since 1.0.0
      *
-     * @return string
+     * @param bool $strict
      */
     public function decode(string $data, $strict = false): string;
 
     /**
-     * Encodes a string to a base64url formatted data
+     * Encodes a string to a base64url formatted data.
      *
-     * @param string $data
-     *
-     * @return string
+     * @since 1.0.0
      */
     public function encode(string $data): string;
 }

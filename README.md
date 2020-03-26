@@ -1,5 +1,7 @@
 # php-jwk
 
+[![codecov](https://codecov.io/gh/Strobotti/php-jwk/branch/master/graph/badge.svg)](https://codecov.io/gh/Strobotti/php-jwk)
+
 A small PHP library to handle JWKs (Json Web Keys)
 
 This library helps to create json web key sets from PEM and is also able to pull out PEMs from json web key sets.
@@ -18,7 +20,7 @@ composer require strobotti/php-jwk
 
 ## Example usage
 
-See full example [here](blob/master/examples/full-flow.php).
+See full example [here](examples/full-flow.php).
 
 ### Create a key-object from PEM
 

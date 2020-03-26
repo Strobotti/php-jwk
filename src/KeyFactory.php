@@ -9,10 +9,11 @@ use Strobotti\JWK\Util\Base64UrlConverter;
 use Strobotti\JWK\Util\Base64UrlConverterInterface;
 
 /**
- * @package Strobotti\JWK
  * @author  Juha Jantunen <juha@strobotti.com>
  * @license https://opensource.org/licenses/MIT MIT
- * @link    https://github.com/Strobotti/php-jwk
+ *
+ * @see   https://github.com/Strobotti/php-jwk
+ * @since 1.0.0
  */
 class KeyFactory
 {
@@ -26,11 +27,11 @@ class KeyFactory
      */
     public function __construct()
     {
-        $this->base64UrlConverter = new Base64UrlConverter();
+        $this->setBase64UrlConverter(new Base64UrlConverter());
     }
 
     /**
-     * @param Base64UrlConverterInterface $base64UrlConverter
+     * @since 1.0.0
      *
      * @return KeyFactory
      */
@@ -42,24 +43,13 @@ class KeyFactory
     }
 
     /**
-     * @return Base64UrlConverterInterface
-     */
-    public function getBase64UrlConverter(): Base64UrlConverterInterface
-    {
-        return $this->base64UrlConverter;
-    }
-
-    /**
-     * @param string $pem
-     * @param array $options
-     *
-     * @return KeyInterface
+     * @since 1.0.0
      */
     public function createFromPem(string $pem, array $options = []): KeyInterface
     {
-        $keyInfo = openssl_pkey_get_details(openssl_pkey_get_public($pem));
+        $keyInfo = \openssl_pkey_get_details(\openssl_pkey_get_public($pem));
 
-        $jsonData = array_merge(
+        $jsonData = \array_merge(
             $options,
             [
                 'kty' => 'RSA',
@@ -69,13 +59,11 @@ class KeyFactory
         );
 
         // TODO Only RSA is supported atm
-        return Key\Rsa::createFromJSON(json_encode($jsonData));
+        return Key\Rsa::createFromJSON(\json_encode($jsonData));
     }
 
     /**
-     * @param string $json
-     *
-     * @return KeyInterface
+     * @since 1.0.0
      */
     public function createFromJson(string $json): KeyInterface
     {
