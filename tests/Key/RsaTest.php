@@ -7,12 +7,12 @@ namespace Strobotti\JWK\Key\Tests;
 use PHPUnit\Framework\TestCase;
 use Strobotti\JWK\Key\Rsa;
 
-final class KeyTest extends TestCase
+/**
+ * @internal
+ */
+final class RsaTest extends TestCase
 {
     /**
-     * @param array  $expected
-     * @param string $input
-     *
      * @dataProvider provideCreateFromJSON
      */
     public function testCreateFromJSON(array $expected, string $input): void
@@ -27,9 +27,6 @@ final class KeyTest extends TestCase
         static::assertSame($expected['e'], $key->getExponent());
     }
 
-    /**
-     * @return \Generator
-     */
     public function provideCreateFromJSON(): \Generator
     {
         yield [
@@ -69,6 +66,6 @@ EOT;
 
         $key = Rsa::createFromJSON($json);
 
-        $this->assertSame($json, "$key");
+        static::assertSame($json, "{$key}");
     }
 }

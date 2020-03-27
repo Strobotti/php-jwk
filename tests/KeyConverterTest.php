@@ -10,12 +10,12 @@ use Strobotti\JWK\Key\KeyInterface;
 use Strobotti\JWK\Key\Rsa;
 use Strobotti\JWK\KeyConverter;
 
+/**
+ * @internal
+ */
 final class KeyConverterTest extends TestCase
 {
     /**
-     * @param KeyInterface $key
-     * @param string       $expected
-     *
      * @dataProvider provideKeyToPem
      */
     public function testKeyToPem(KeyInterface $key, string $expected): void
@@ -27,9 +27,6 @@ final class KeyConverterTest extends TestCase
         );
     }
 
-    /**
-     * @return \Generator
-     */
     public function provideKeyToPem(): \Generator
     {
         yield [
@@ -55,20 +52,21 @@ EOT
         ];
     }
 
-    public function testUnsupportedKeyTypeRaisesException()
+    public function testUnsupportedKeyTypeRaisesException(): void
     {
         /** @var KeyInterface|MockObject $key */
         $key = $this->getMockBuilder(KeyInterface::class)->getMock();
 
         $converter = new KeyConverter();
+
         try {
             $converter->keyToPem($key);
 
-            $this->fail('converting an unsupported key to PEM should throw an exception');
+            static::fail('converting an unsupported key to PEM should throw an exception');
         } catch (\InvalidArgumentException $e) {
-            $this->assertTrue(true);
+            static::assertTrue(true);
         } catch (\Throwable $e) {
-            $this->fail(sprintf('converting an unsupported key to PEM threw an unexpected exception %s', get_class($e)));
+            static::fail(\sprintf('converting an unsupported key to PEM threw an unexpected exception %s', \get_class($e)));
         }
     }
 }
