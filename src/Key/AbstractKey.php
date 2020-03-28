@@ -66,7 +66,7 @@ abstract class AbstractKey implements KeyInterface
      *
      * @since 1.0.0
      */
-    public function getKeyId(): string
+    public function getKeyId(): ?string
     {
         return $this->kid;
     }
@@ -76,7 +76,7 @@ abstract class AbstractKey implements KeyInterface
      *
      * @since 1.0.0
      */
-    public function getPublicKeyUse(): string
+    public function getPublicKeyUse(): ?string
     {
         return $this->use;
     }

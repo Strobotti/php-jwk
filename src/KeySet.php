@@ -59,7 +59,7 @@ class KeySet implements \JsonSerializable
      */
     public function containsKey(string $kid, string $use = KeyInterface::PUBLIC_KEY_USE_SIGNATURE): bool
     {
-        return $this->getKeyById($kid, $use) !== null;
+        return null !== $this->getKeyById($kid, $use);
     }
 
     /**
@@ -69,7 +69,7 @@ class KeySet implements \JsonSerializable
     public function getKeyById(string $kid, string $use = KeyInterface::PUBLIC_KEY_USE_SIGNATURE): ?KeyInterface
     {
         foreach ($this->getKeys() as $key) {
-            if ($key->getKeyId() == $kid && $key->getPublicKeyUse() == $use) {
+            if ($key->getKeyId() === $kid && $key->getPublicKeyUse() === $use) {
                 return $key;
             }
         }
@@ -98,7 +98,7 @@ class KeySet implements \JsonSerializable
      */
     public function getKeys(): array
     {
-        return array_values($this->keys);
+        return \array_values($this->keys);
     }
 
     /**
