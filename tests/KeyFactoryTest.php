@@ -8,27 +8,23 @@ use PHPUnit\Framework\TestCase;
 use Strobotti\JWK\Key\Rsa;
 use Strobotti\JWK\KeyFactory;
 
+/**
+ * @internal
+ */
 final class KeyFactoryTest extends TestCase
 {
     /**
-     * @param string $pem
-     * @param array $options
-     * @param array $json
-     *
      * @dataProvider provideCreateFromPem
      */
-    public function testCreateFromPem(string $pem, array $options, array $json, string $expectedInstance)
+    public function testCreateFromPem(string $pem, array $options, array $json, string $expectedInstance): void
     {
         $factory = new KeyFactory();
         $key = $factory->createFromPem($pem, $options);
 
-        $this->assertInstanceOf($expectedInstance, $key);
-        static::assertEquals($json, $key->jsonSerialize());
+        static::assertInstanceOf($expectedInstance, $key);
+        static::assertSame($json, $key->jsonSerialize());
     }
 
-    /**
-     * @return \Generator
-     */
     public function provideCreateFromPem(): \Generator
     {
         yield [

@@ -7,24 +7,21 @@ namespace Strobotti\JWK\Key\Tests;
 use PHPUnit\Framework\TestCase;
 use Strobotti\JWK\Util\Base64UrlConverter;
 
+/**
+ * @internal
+ */
 final class Base64UrlConverterTest extends TestCase
 {
     /**
-     * @param string $expected
-     * @param string $input
-     *
      * @dataProvider provideDecode
      */
     public function testDecode(string $expected, string $input): void
     {
         $converter = new Base64UrlConverter();
 
-        $this->assertSame($expected, $converter->decode($input));
+        static::assertSame($expected, $converter->decode($input));
     }
 
-    /**
-     * @return \Generator
-     */
     public function provideDecode(): \Generator
     {
         yield [
@@ -34,21 +31,15 @@ final class Base64UrlConverterTest extends TestCase
     }
 
     /**
-     * @param string $expected
-     * @param string $input
-     *
      * @dataProvider provideEncode
      */
     public function testEncode(string $expected, string $input): void
     {
         $converter = new Base64UrlConverter();
 
-        $this->assertSame($expected, $converter->encode($input));
+        static::assertSame($expected, $converter->encode($input));
     }
 
-    /**
-     * @return \Generator
-     */
     public function provideEncode(): \Generator
     {
         yield [
