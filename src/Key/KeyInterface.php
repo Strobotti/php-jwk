@@ -52,7 +52,7 @@ interface KeyInterface extends \JsonSerializable
      *
      * @since 1.0.0
      */
-    public function getPublicKeyUse(): string;
+    public function getPublicKeyUse(): ?string;
 
     /**
      * Gets the cryptographic algorithm used to sign the key, ie. the value of the `alg` field.

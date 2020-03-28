@@ -54,23 +54,27 @@ class KeySet implements \JsonSerializable
     }
 
     /**
-     * @since 1.0.0
+     * @since 1.0.0 Only $kid parameter
+     * @since 1.1.0 Added optional $use parameter
      */
-    public function containsKey(string $kid): bool
+    public function containsKey(string $kid, string $use = KeyInterface::PUBLIC_KEY_USE_SIGNATURE): bool
     {
-        return \array_key_exists($kid, $this->keys);
+        return null !== $this->getKeyById($kid, $use);
     }
 
     /**
      * @since 1.0.0
+     * @since 1.1.0 Added optional $use parameter
      */
-    public function getKeyById(string $kid): ?KeyInterface
+    public function getKeyById(string $kid, string $use = KeyInterface::PUBLIC_KEY_USE_SIGNATURE): ?KeyInterface
     {
-        if (!$this->containsKey($kid)) {
-            return null;
+        foreach ($this->getKeys() as $key) {
+            if ($key->getKeyId() === $kid && $key->getPublicKeyUse() === $use) {
+                return $key;
+            }
         }
 
-        return $this->keys[$kid];
+        return null;
     }
 
     /**
@@ -80,13 +84,21 @@ class KeySet implements \JsonSerializable
      */
     public function addKey(KeyInterface $key): self
     {
-        if ($this->containsKey($key->getKeyId())) {
-            throw new \InvalidArgumentException(\sprintf('Key with id `%s` already exists in the set', $key->getKeyId()));
+        if ($this->containsKey($key->getKeyId(), $key->getPublicKeyUse())) {
+            throw new \InvalidArgumentException(\sprintf('Key with id `%s` and use `%s` already exists in the set', $key->getKeyId(), $key->getPublicKeyUse()));
         }
 
-        $this->keys[$key->getKeyId()] = $key;
+        $this->keys[] = $key;
 
         return $this;
+    }
+
+    /**
+     * @return KeyInterface[]
+     */
+    public function getKeys(): array
+    {
+        return \array_values($this->keys);
     }
 
     /**
@@ -96,7 +108,7 @@ class KeySet implements \JsonSerializable
     {
         $ret = [];
 
-        foreach ($this->keys as $key) {
+        foreach ($this->getKeys() as $key) {
             $ret[$key->getKeyId()] = $key->jsonSerialize();
         }
 
