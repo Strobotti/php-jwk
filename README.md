@@ -1,5 +1,6 @@
 # php-jwk
 
+[![Build Status](https://travis-ci.com/Strobotti/php-jwk.svg?branch=master)](https://travis-ci.com/Strobotti/php-jwk)
 [![codecov](https://codecov.io/gh/Strobotti/php-jwk/branch/master/graph/badge.svg)](https://codecov.io/gh/Strobotti/php-jwk)
 
 A small PHP library to handle JWKs (Json Web Keys)
@@ -120,3 +121,7 @@ lq2ybzcLh3zyhCitBOebiRWDQfG26EH9lTlJhll+p/Dg8vAXxJLIJ4SNLcqgFeZe
 xwIDAQAB
 -----END PUBLIC KEY-----
 ```
+
+### Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
