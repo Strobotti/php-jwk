@@ -23,14 +23,14 @@ abstract class AbstractKey implements KeyInterface
     /**
      * The key ID.
      *
-     * @var string
+     * @var null|string
      */
     private $kid;
 
     /**
      * The public key use.
      *
-     * @var string
+     * @var null|string
      */
     private $use;
 
@@ -54,11 +54,36 @@ abstract class AbstractKey implements KeyInterface
     /**
      * {@inheritdoc}
      *
+     * @since 1.0.0 Protected setter
+     * @since 1.2.0 Public setter
+     */
+    public function setKeyType(string $kty): KeyInterface
+    {
+        $this->kty = $kty;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @since 1.0.0
      */
     public function getKeyType(): string
     {
         return $this->kty;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @since 1.2.0
+     */
+    public function setKeyId(?string $kid): KeyInterface
+    {
+        $this->kid = $kid;
+
+        return $this;
     }
 
     /**
@@ -74,11 +99,35 @@ abstract class AbstractKey implements KeyInterface
     /**
      * {@inheritdoc}
      *
+     * @since 1.2.0
+     */
+    public function setPublicKeyUse(?string $use): KeyInterface
+    {
+        $this->use = $use;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @since 1.0.0
      */
     public function getPublicKeyUse(): ?string
     {
         return $this->use;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @since 1.2.0
+     */
+    public function setAlgorithm(string $alg): KeyInterface
+    {
+        $this->alg = $alg;
+
+        return $this;
     }
 
     /**
@@ -139,15 +188,5 @@ abstract class AbstractKey implements KeyInterface
         }
 
         return $instance;
-    }
-
-    /**
-     * @since 1.0.0
-     */
-    protected function setKeyType(string $kty): self
-    {
-        $this->kty = $kty;
-
-        return $this;
     }
 }

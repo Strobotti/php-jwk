@@ -36,6 +36,18 @@ class Rsa extends AbstractKey
     }
 
     /**
+     * Sets the exponent for the RSA public key, ie. the `e` field.
+     *
+     * @since 1.2.0
+     */
+    public function setExponent(string $e): self
+    {
+        $this->e = $e;
+
+        return $this;
+    }
+
+    /**
      * Returns the exponent for the RSA public key.
      *
      * @since 1.0.0
@@ -46,7 +58,19 @@ class Rsa extends AbstractKey
     }
 
     /**
-     * Returns the modulus for the RSA public key.
+     * Sets the modulus for the RSA public key, ie. the `n` field.
+     *
+     * @since 1.2.0
+     */
+    public function setModulus(string $n): KeyInterface
+    {
+        $this->n = $n;
+
+        return $this;
+    }
+
+    /**
+     * Returns the modulus for the RSA public key, ie. the `n`field.
      *
      * @since 1.0.0
      */

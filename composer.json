@@ -1,11 +1,14 @@
 {
   "name": "strobotti/php-jwk",
   "description": "A small PHP library to handle JWKs (Json Web Keys)",
+  "type": "library",
+  "keywords": ["jwk", "jwks"],
   "homepage": "https://github.com/Strobotti/php-jwk",
   "authors": [
     {
       "name": "Juha Jantunen",
       "email": "juha@strobotti.com",
+      "homepage": "https://www.strobotti.com",
       "role": "Developer"
     }
   ],
@@ -18,16 +21,22 @@
   },
   "autoload": {
     "psr-4": {
-      "Strobotti\\JWK\\": "src"
-    },
-    "autoload-dev": {
-      "psr-4": {
-        "Strobotti\\JWK\\Tests\\": "tests/"
-      }
+      "Strobotti\\JWK\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Strobotti\\JWK\\Tests\\": "tests/"
     }
   },
   "require-dev": {
     "phpunit/phpunit": "^8.0",
     "friendsofphp/php-cs-fixer": "^2.16"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit"
+  },
+  "scripts-descriptions": {
+    "test": "Run all tests"
   }
 }
