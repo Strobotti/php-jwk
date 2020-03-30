@@ -20,7 +20,7 @@ Basic steps:
 1. Clone it locally
 1. Install dependencies with Composer
     ```bash
-    composer install
+    $ composer install
     ```
 1. Create a branch on your fork
 1. Commit & push
@@ -31,11 +31,11 @@ Some guidelines:
 
 1. Before committing make sure to format the code accordingly:
     ```bash
-    make php-cs-fixer-fix
+    $ make php-cs-fixer-fix
     ```
 1. Also make sure the tests pass successfully and you have sufficient coverage
     ```bash
-    make test-unit
+    $ make test-unit
     ```
 
 ### Git Commit Messages
