@@ -77,9 +77,10 @@ EOT;
 
         $key = new Rsa();
         $key->setExponent($e)
-            ->setModulus($n);
+            ->setModulus($n)
+        ;
 
-        $this->assertSame($e, $key->getExponent());
-        $this->assertSame($n, $key->getModulus());
+        static::assertSame($e, $key->getExponent());
+        static::assertSame($n, $key->getModulus());
     }
 }

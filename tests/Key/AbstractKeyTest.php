@@ -35,19 +35,20 @@ EOT;
         $key->setAlgorithm(KeyInterface::ALGORITHM_RS256)
             ->setPublicKeyUse(KeyInterface::PUBLIC_KEY_USE_SIGNATURE)
             ->setKeyType(KeyInterface::KEY_TYPE_RSA)
-            ->setKeyId('asdf');
+            ->setKeyId('asdf')
+        ;
 
-        $this->assertSame(KeyInterface::ALGORITHM_RS256, $key->getAlgorithm());
-        $this->assertSame(KeyInterface::PUBLIC_KEY_USE_SIGNATURE, $key->getPublicKeyUse());
-        $this->assertSame(KeyInterface::KEY_TYPE_RSA, $key->getKeyType());
-        $this->assertSame('asdf', $key->getKeyId());
+        static::assertSame(KeyInterface::ALGORITHM_RS256, $key->getAlgorithm());
+        static::assertSame(KeyInterface::PUBLIC_KEY_USE_SIGNATURE, $key->getPublicKeyUse());
+        static::assertSame(KeyInterface::KEY_TYPE_RSA, $key->getKeyType());
+        static::assertSame('asdf', $key->getKeyId());
 
         // Test nullable fields
         $key->setKeyId(null);
         $key->setPublicKeyUse(null);
 
-        $this->assertNull($key->getKeyId());
-        $this->assertNull($key->getPublicKeyUse());
+        static::assertNull($key->getKeyId());
+        static::assertNull($key->getPublicKeyUse());
     }
 }
 
