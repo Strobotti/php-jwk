@@ -13,7 +13,7 @@ use Strobotti\JWK\Key\KeyInterface;
  * @see    https://github.com/Strobotti/php-jwk
  * @since 1.0.0
  */
-class KeySet implements \JsonSerializable
+class KeySet implements \JsonSerializable, \Countable, \IteratorAggregate
 {
     /**
      * @var KeyFactory
@@ -84,7 +84,7 @@ class KeySet implements \JsonSerializable
      */
     public function addKey(KeyInterface $key): self
     {
-        if ($this->containsKey($key->getKeyId(), $key->getPublicKeyUse())) {
+        if ($key->getKeyId() && $this->containsKey($key->getKeyId(), $key->getPublicKeyUse())) {
             throw new \InvalidArgumentException(\sprintf('Key with id `%s` and use `%s` already exists in the set', $key->getKeyId(), $key->getPublicKeyUse()));
         }
 
@@ -115,5 +115,21 @@ class KeySet implements \JsonSerializable
         return [
             'keys' => \array_values($ret),
         ];
+    }
+
+    /**
+     * @since 1.3.0
+     */
+    public function count(): int
+    {
+        return \count($this->keys);
+    }
+
+    /**
+     * @since 1.3.0
+     */
+    public function getIterator(): \ArrayIterator
+    {
+        return new \ArrayIterator($this->keys);
     }
 }

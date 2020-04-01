@@ -97,4 +97,42 @@ EOT;
 
         static::assertNull($keySet->getKeyById('asdf'));
     }
+
+    public function testCountable(): void
+    {
+        $keyset = new KeySet();
+        static::assertCount(0, $keyset);
+
+        $keyset->addKey(new Rsa());
+        static::assertCount(1, $keyset);
+
+        $keyset->addKey(new Rsa());
+        static::assertCount(2, $keyset);
+    }
+
+    public function testIteratorAggregate(): void
+    {
+        $keyset = new KeySet();
+
+        $count = 0;
+
+        foreach ($keyset as $key) {
+            ++$count;
+        }
+
+        static::assertSame(0, $count);
+
+        $keyset->addKey(new Rsa());
+        $keyset->addKey(new Rsa());
+        $keyset->addKey(new Rsa());
+
+        foreach ($keyset as $index => $key) {
+            static::assertInstanceOf(Rsa::class, $key);
+            static::assertSame($index, $count);
+
+            ++$count;
+        }
+
+        static::assertSame(3, $count);
+    }
 }
