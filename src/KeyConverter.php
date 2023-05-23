@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Strobotti\JWK;
 
-use phpseclib\Crypt\RSA;
-use phpseclib\Math\BigInteger;
+use phpseclib3\Crypt\PublicKeyLoader;
+use phpseclib3\Math\BigInteger;
 use Strobotti\JWK\Key\KeyInterface;
 use Strobotti\JWK\Key\Rsa as RsaKey;
 use Strobotti\JWK\Util\Base64UrlConverter;
@@ -42,16 +42,13 @@ class KeyConverter
             throw new \InvalidArgumentException();
         }
 
-        /** @var RsaKey $key */
-        $rsa = new RSA();
-
         $modulus = $this->base64UrlConverter->decode($key->getModulus(), true);
 
-        $rsa->loadKey([
+        $rsa = PublicKeyLoader::load([
             'e' => new BigInteger(\base64_decode($key->getExponent(), true), 256),
             'n' => new BigInteger($modulus, 256),
         ]);
 
-        return $rsa->getPublicKey();
+        return $rsa->__toString();
     }
 }
