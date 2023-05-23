@@ -15,7 +15,7 @@ See [JSON Web Key RFC](https://tools.ietf.org/html/rfc7517) for reference.
 
 ## Installation
 
-This library requires PHP version 7.2 or higher and can be installed with composer:
+This library requires PHP version 7.3 or higher and can be installed with composer:
 
 ```bash
 $ composer require strobotti/php-jwk
