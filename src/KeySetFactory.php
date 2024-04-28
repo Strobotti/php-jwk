@@ -45,6 +45,10 @@ class KeySetFactory
 
         $instance = new KeySet();
 
+        if (! is_array($assoc) || ! array_key_exists('keys', $assoc)) {
+            return $instance;
+        }
+
         foreach ($assoc['keys'] as $keyData) {
             $key = $this->keyFactory->createFromJson(\json_encode($keyData));
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Strobotti\JWK\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Strobotti\JWK\KeySet;
 use Strobotti\JWK\KeySetFactory;
 
 /**
@@ -23,6 +24,17 @@ final class KeySetFactoryTest extends TestCase
         $json = $keys->jsonSerialize();
 
         static::assertSame(\json_decode($input, true), $json);
+    }
+
+    public function testInvalidJsonReturnsEmptyKeySet(): void
+    {
+        $invalidJson = '{}';
+
+        $factory = new KeySetFactory();
+
+        $keySet = $factory->createFromJSON($invalidJson);
+        $this->assertInstanceOf(KeySet::class, $keySet);
+        $this->assertCount(0, $keySet);
     }
 
     public function provideCreateFromJSON(): \Generator
