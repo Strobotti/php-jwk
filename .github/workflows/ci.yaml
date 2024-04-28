@@ -1,0 +1,54 @@
+on:
+  push:
+
+name: CI
+
+jobs:
+  dependency-validation:
+    name: Dependency Validation
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: /tmp/composer-cache
+          key: "${{ runner.os }}-${{ hashFiles('**/composer.lock') }}"
+
+      - name: Install Composer
+        uses: php-actions/composer@v6
+
+      - name: Ensure that composer.json is valid
+        run: composer validate --no-ansi --strict composer.json
+
+      - name: Ensure that dependencies can be installed
+        run: composer install --no-ansi --dry-run
+
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    needs:
+      - dependency-validation
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: /tmp/composer-cache
+          key: "${{ runner.os }}-${{ hashFiles('**/composer.lock') }}"
+
+      - name: Install Composer
+        uses: php-actions/composer@v6
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit
