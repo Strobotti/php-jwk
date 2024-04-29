@@ -1,0 +1,21 @@
+on:
+  push:
+    branches:
+      - master
+
+name: Release
+
+jobs:
+  release:
+    name: Release
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: paulhatch/semantic-version@latest
