@@ -18,4 +18,4 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: paulhatch/semantic-version@latest
+      - uses: paulhatch/semantic-version@v5
