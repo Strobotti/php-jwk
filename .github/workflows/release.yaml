@@ -7,15 +7,14 @@ name: Release
 
 jobs:
   release:
-    name: Release
-
+    name: Semantic Release
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - uses: paulhatch/semantic-version@v5.3.0
+      - name: Execute Semantic Release
+        id: semantic
+        uses: cycjimmy/semantic-release-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
