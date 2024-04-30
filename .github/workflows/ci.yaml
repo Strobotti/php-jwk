@@ -51,4 +51,7 @@ jobs:
         uses: php-actions/composer@v6
 
       - name: Run PHPUnit
-        run: php -d xdebug.mode=coverage ./vendor/bin/phpunit
+        run: make test-unit
+
+      - name: Run php-cs-fixer
+        run: make php-cs-fixer

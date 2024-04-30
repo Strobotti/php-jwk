@@ -32,7 +32,7 @@
   "require-dev": {
     "ext-xml": "*",
     "phpunit/phpunit": "^10.0",
-    "friendsofphp/php-cs-fixer": "^2.16"
+    "friendsofphp/php-cs-fixer": "3.54.0"
   },
   "scripts": {
     "test": "./vendor/bin/phpunit"

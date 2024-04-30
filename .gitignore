@@ -7,3 +7,4 @@ vendor
 coverage.xml
 .php_cs.cache
 .phpunit.cache
+.php-cs-fixer.cache
