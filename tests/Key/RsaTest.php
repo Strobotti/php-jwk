@@ -50,7 +50,7 @@ final class RsaTest extends TestCase
 }
 EOT
         ];
-}
+    }
 
     public function testToString(): void
     {

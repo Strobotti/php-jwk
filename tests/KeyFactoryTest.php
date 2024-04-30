@@ -55,5 +55,5 @@ EOT
         ],
         'expectedInstance' => Rsa::class,
     ];
-}
+    }
 }

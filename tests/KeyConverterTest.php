@@ -50,7 +50,7 @@ xwIDAQAB
 -----END PUBLIC KEY-----
 EOT
         ];
-}
+    }
 
     public function testUnsupportedKeyTypeRaisesException(): void
     {
