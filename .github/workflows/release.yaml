@@ -13,6 +13,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: /tmp/composer-cache
+          key: "${{ runner.os }}-${{ hashFiles('**/composer.lock') }}"
+
+      - name: Install Composer
+        uses: php-actions/composer@v6
+
+      - name: Run PHPUnit
+        run: php -d xdebug.mode=coverage ./vendor/bin/phpunit
+
+      - name: Make Coverage Badge
+        uses: action-badges/cobertura-coverage-xml-badges@0.3.0
+        with:
+          file-name: coverage.svg
+          badge-branch: gh-pages
+          coverage-file-name: tests/coverage.latest/coverage.xml
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Execute Semantic Release
         id: semantic
         uses: cycjimmy/semantic-release-action@v3

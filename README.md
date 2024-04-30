@@ -1,6 +1,7 @@
 # php-jwk
 
 [![Latest Stable Version](https://poser.pugx.org/strobotti/php-jwk/v/stable)](https://packagist.org/packages/strobotti/php-jwk)
+![coverage](https://raw.githubusercontent.com/Strobotti/php-jwk/gh-pages/.badges/master/coverage.svg)
 [![License](https://poser.pugx.org/strobotti/php-jwk/license)](https://packagist.org/packages/strobotti/php-jwk)
 
 A small PHP library to handle JWKs (Json Web Keys)
