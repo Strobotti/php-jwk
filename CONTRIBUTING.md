@@ -12,7 +12,7 @@ You can open [a new issue](https://github.com/Strobotti/php-jwk/issues) once you
 
 If you want to fix a bug or add a missing feature you can open a new pull-request.
 
-Please note that you need a PHP 7.2 or later for using this library (including running the tests).
+Please note that you need a PHP 7.3 or later for using this library (running the tests requires at least php 8.2).
 
 Basic steps:
 
@@ -40,9 +40,10 @@ Some guidelines:
 
 ### Git Commit Messages
 
-* Use the present tense ("Add feature" not "Added feature")
-* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-* Limit the first line to 72 characters or less
+* use [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) to make the commit messages more readable and to allow for automatic semantic versioning and changelog generation
+* Use the present tense ("add feature" not "added feature")
+* Use the imperative mood ("move cursor to..." not "moves cursor to...")
+* Limit the first line to 72 characters, or less
 
 ## License
 
