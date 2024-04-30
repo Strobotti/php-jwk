@@ -34,8 +34,8 @@ final class KeySetTest extends TestCase
 }
 EOT;
 
-    yield [
-        'expected' => <<<'EOT'
+        yield [
+            'expected' => <<<'EOT'
 {
     "keys": [
         {
@@ -49,11 +49,11 @@ EOT;
     ]
 }
 EOT
-            ,
-        'keySet' => (new KeySet())
-            ->addKey(Rsa::createFromJSON($keyJson)),
-    ];
-}
+                ,
+            'keySet' => (new KeySet())
+                ->addKey(Rsa::createFromJSON($keyJson)),
+        ];
+    }
 
     public function testAddKeyThrowsErrorOnDuplicateKid(): void
     {

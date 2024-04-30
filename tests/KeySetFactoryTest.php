@@ -63,5 +63,5 @@ final class KeySetFactoryTest extends TestCase
 }
 EOT
         ];
-}
+    }
 }
