@@ -11,6 +11,11 @@ jobs:
     timeout-minutes: 5
 
     steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -38,6 +43,11 @@ jobs:
       - dependency-validation
 
     steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
       - name: Checkout
         uses: actions/checkout@v4
 
