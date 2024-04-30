@@ -21,13 +21,13 @@ final class KeyConverterTest extends TestCase
     public function testKeyToPem(KeyInterface $key, string $expected): void
     {
         $converter = new KeyConverter();
-        static::assertSame(
+        $this->assertSame(
             \str_replace("\r", '', $expected),
             \str_replace("\r", '', $converter->keyToPem($key))
         );
     }
 
-    public function provideKeyToPem(): \Generator
+    public static function provideKeyToPem(): \Generator
     {
         yield [
             'key' => Rsa::createFromJSON('{
@@ -50,7 +50,7 @@ xwIDAQAB
 -----END PUBLIC KEY-----
 EOT
         ];
-    }
+}
 
     public function testUnsupportedKeyTypeRaisesException(): void
     {
@@ -62,11 +62,11 @@ EOT
         try {
             $converter->keyToPem($key);
 
-            static::fail('converting an unsupported key to PEM should throw an exception');
+            $this->fail('converting an unsupported key to PEM should throw an exception');
         } catch (\InvalidArgumentException $e) {
-            static::assertTrue(true);
+            $this->assertTrue(true);
         } catch (\Throwable $e) {
-            static::fail(\sprintf('converting an unsupported key to PEM threw an unexpected exception %s', \get_class($e)));
+            $this->fail(\sprintf('converting an unsupported key to PEM threw an unexpected exception %s', \get_class($e)));
         }
     }
 }

@@ -5,5 +5,5 @@ composer.lock
 composer.phar
 vendor
 coverage.xml
-clover.xml
 .php_cs.cache
+.phpunit.cache

@@ -30,7 +30,8 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.0",
+    "ext-xml": "*",
+    "phpunit/phpunit": "^10.0",
     "friendsofphp/php-cs-fixer": "^2.16"
   },
   "scripts": {

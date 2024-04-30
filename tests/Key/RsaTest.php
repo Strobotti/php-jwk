@@ -19,15 +19,15 @@ final class RsaTest extends TestCase
     {
         $key = Rsa::createFromJSON($input);
 
-        static::assertSame($expected['kty'], $key->getKeyType());
-        static::assertSame($expected['kid'], $key->getKeyId());
-        static::assertSame($expected['use'], $key->getPublicKeyUse());
-        static::assertSame($expected['alg'], $key->getAlgorithm());
-        static::assertSame($expected['n'], $key->getModulus());
-        static::assertSame($expected['e'], $key->getExponent());
+        $this->assertSame($expected['kty'], $key->getKeyType());
+        $this->assertSame($expected['kid'], $key->getKeyId());
+        $this->assertSame($expected['use'], $key->getPublicKeyUse());
+        $this->assertSame($expected['alg'], $key->getAlgorithm());
+        $this->assertSame($expected['n'], $key->getModulus());
+        $this->assertSame($expected['e'], $key->getExponent());
     }
 
-    public function provideCreateFromJSON(): \Generator
+    public static function provideCreateFromJSON(): \Generator
     {
         yield [
             'expected' => [
@@ -50,7 +50,7 @@ final class RsaTest extends TestCase
 }
 EOT
         ];
-    }
+}
 
     public function testToString(): void
     {
@@ -67,7 +67,7 @@ EOT;
 
         $key = Rsa::createFromJSON($json);
 
-        static::assertSame($json, "{$key}");
+        $this->assertSame($json, "{$key}");
     }
 
     public function testSettersAndGetters(): void
@@ -80,7 +80,7 @@ EOT;
             ->setModulus($n)
         ;
 
-        static::assertSame($e, $key->getExponent());
-        static::assertSame($n, $key->getModulus());
+        $this->assertSame($e, $key->getExponent());
+        $this->assertSame($n, $key->getModulus());
     }
 }

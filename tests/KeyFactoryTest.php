@@ -21,11 +21,11 @@ final class KeyFactoryTest extends TestCase
         $factory = new KeyFactory();
         $key = $factory->createFromPem($pem, $options);
 
-        static::assertInstanceOf($expectedInstance, $key);
-        static::assertSame($json, $key->jsonSerialize());
+        $this->assertInstanceOf($expectedInstance, $key);
+        $this->assertSame($json, $key->jsonSerialize());
     }
 
-    public function provideCreateFromPem(): \Generator
+    public static function provideCreateFromPem(): \Generator
     {
         yield [
             'pem' => <<<'EOT'
@@ -40,20 +40,20 @@ xwIDAQAB
 -----END PUBLIC KEY-----
 EOT
             ,
-            'options' => [
-                'use' => 'sig',
-                'alg' => 'RS256',
-                'kid' => 'eXaunmL',
-            ],
-            'json' => [
-                'kty' => 'RSA',
-                'use' => 'sig',
-                'alg' => 'RS256',
-                'kid' => 'eXaunmL',
-                'n' => '4dGQ7bQK8LgILOdLsYzfZjkEAoQeVC_aqyc8GC6RX7dq_KvRAQAWPvkam8VQv4GK5T4ogklEKEvj5ISBamdDNq1n52TpxQwI2EqxSk7I9fKPKhRt4F8-2yETlYvye-2s6NeWJim0KBtOVrk0gWvEDgd6WOqJl_yt5WBISvILNyVg1qAAM8JeX6dRPosahRVDjA52G2X-Tip84wqwyRpUlq2ybzcLh3zyhCitBOebiRWDQfG26EH9lTlJhll-p_Dg8vAXxJLIJ4SNLcqgFeZe4OfHLgdzMvxXZJnPp_VgmkcpUdRotazKZumj6dBPcXI_XID4Z4Z3OM1KrZPJNdUhxw',
-                'e' => 'AQAB',
-            ],
-            'expectedInstance' => Rsa::class,
-        ];
-    }
+        'options' => [
+            'use' => 'sig',
+            'alg' => 'RS256',
+            'kid' => 'eXaunmL',
+        ],
+        'json' => [
+            'kty' => 'RSA',
+            'use' => 'sig',
+            'alg' => 'RS256',
+            'kid' => 'eXaunmL',
+            'n' => '4dGQ7bQK8LgILOdLsYzfZjkEAoQeVC_aqyc8GC6RX7dq_KvRAQAWPvkam8VQv4GK5T4ogklEKEvj5ISBamdDNq1n52TpxQwI2EqxSk7I9fKPKhRt4F8-2yETlYvye-2s6NeWJim0KBtOVrk0gWvEDgd6WOqJl_yt5WBISvILNyVg1qAAM8JeX6dRPosahRVDjA52G2X-Tip84wqwyRpUlq2ybzcLh3zyhCitBOebiRWDQfG26EH9lTlJhll-p_Dg8vAXxJLIJ4SNLcqgFeZe4OfHLgdzMvxXZJnPp_VgmkcpUdRotazKZumj6dBPcXI_XID4Z4Z3OM1KrZPJNdUhxw',
+            'e' => 'AQAB',
+        ],
+        'expectedInstance' => Rsa::class,
+    ];
+}
 }

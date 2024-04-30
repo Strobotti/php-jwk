@@ -23,7 +23,7 @@ final class KeySetFactoryTest extends TestCase
         $keys = $factory->createFromJSON($input);
         $json = $keys->jsonSerialize();
 
-        static::assertSame(\json_decode($input, true), $json);
+        $this->assertSame(\json_decode($input, true), $json);
     }
 
     public function testInvalidJsonReturnsEmptyKeySet(): void
@@ -37,7 +37,7 @@ final class KeySetFactoryTest extends TestCase
         $this->assertCount(0, $keySet);
     }
 
-    public function provideCreateFromJSON(): \Generator
+    public static function provideCreateFromJSON(): \Generator
     {
         yield [
             'input' => <<<'EOT'
@@ -63,5 +63,5 @@ final class KeySetFactoryTest extends TestCase
 }
 EOT
         ];
-    }
+}
 }

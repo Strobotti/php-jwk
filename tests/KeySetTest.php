@@ -18,10 +18,10 @@ final class KeySetTest extends TestCase
      */
     public function testToString(string $expected, KeySet $keySet): void
     {
-        static::assertSame($expected, "{$keySet}");
+        $this->assertSame($expected, "{$keySet}");
     }
 
-    public function provideCreateFromJSON(): \Generator
+    public static function provideCreateFromJSON(): \Generator
     {
         $keyJson = <<<'EOT'
 {
@@ -34,8 +34,8 @@ final class KeySetTest extends TestCase
 }
 EOT;
 
-        yield [
-            'expected' => <<<'EOT'
+    yield [
+        'expected' => <<<'EOT'
 {
     "keys": [
         {
@@ -50,10 +50,10 @@ EOT;
 }
 EOT
             ,
-            'keySet' => (new KeySet())
-                ->addKey(Rsa::createFromJSON($keyJson)),
-        ];
-    }
+        'keySet' => (new KeySet())
+            ->addKey(Rsa::createFromJSON($keyJson)),
+    ];
+}
 
     public function testAddKeyThrowsErrorOnDuplicateKid(): void
     {
@@ -93,21 +93,21 @@ EOT;
         $keySet = new KeySet();
         $keySet->addKey($key);
 
-        static::assertSame($key, $keySet->getKeyById('86D88Kf'));
+        $this->assertSame($key, $keySet->getKeyById('86D88Kf'));
 
-        static::assertNull($keySet->getKeyById('asdf'));
+        $this->assertNull($keySet->getKeyById('asdf'));
     }
 
     public function testCountable(): void
     {
         $keyset = new KeySet();
-        static::assertCount(0, $keyset);
+        $this->assertCount(0, $keyset);
 
         $keyset->addKey(new Rsa());
-        static::assertCount(1, $keyset);
+        $this->assertCount(1, $keyset);
 
         $keyset->addKey(new Rsa());
-        static::assertCount(2, $keyset);
+        $this->assertCount(2, $keyset);
     }
 
     public function testIteratorAggregate(): void
@@ -120,19 +120,19 @@ EOT;
             ++$count;
         }
 
-        static::assertSame(0, $count);
+        $this->assertSame(0, $count);
 
         $keyset->addKey(new Rsa());
         $keyset->addKey(new Rsa());
         $keyset->addKey(new Rsa());
 
         foreach ($keyset as $index => $key) {
-            static::assertInstanceOf(Rsa::class, $key);
-            static::assertSame($index, $count);
+            $this->assertInstanceOf(Rsa::class, $key);
+            $this->assertSame($index, $count);
 
             ++$count;
         }
 
-        static::assertSame(3, $count);
+        $this->assertSame(3, $count);
     }
 }

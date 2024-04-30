@@ -26,7 +26,7 @@ EOT;
 
         $key = AbstractKeyTest__AbstractKey__Mock::createFromJSON($json);
 
-        static::assertSame($json, "{$key}");
+        $this->assertSame($json, "{$key}");
     }
 
     public function testSettersAndGetters(): void
@@ -38,17 +38,17 @@ EOT;
             ->setKeyId('asdf')
         ;
 
-        static::assertSame(KeyInterface::ALGORITHM_RS256, $key->getAlgorithm());
-        static::assertSame(KeyInterface::PUBLIC_KEY_USE_SIGNATURE, $key->getPublicKeyUse());
-        static::assertSame(KeyInterface::KEY_TYPE_RSA, $key->getKeyType());
-        static::assertSame('asdf', $key->getKeyId());
+        $this->assertSame(KeyInterface::ALGORITHM_RS256, $key->getAlgorithm());
+        $this->assertSame(KeyInterface::PUBLIC_KEY_USE_SIGNATURE, $key->getPublicKeyUse());
+        $this->assertSame(KeyInterface::KEY_TYPE_RSA, $key->getKeyType());
+        $this->assertSame('asdf', $key->getKeyId());
 
         // Test nullable fields
         $key->setKeyId(null);
         $key->setPublicKeyUse(null);
 
-        static::assertNull($key->getKeyId());
-        static::assertNull($key->getPublicKeyUse());
+        $this->assertNull($key->getKeyId());
+        $this->assertNull($key->getPublicKeyUse());
     }
 }
 
