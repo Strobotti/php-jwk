@@ -100,7 +100,7 @@ class Rsa extends AbstractKey
      *
      * @return self
      */
-    public static function createFromJSON(string $json, KeyInterface $prototype = null): KeyInterface
+    public static function createFromJSON(string $json, ?KeyInterface $prototype = null): KeyInterface
     {
         if (!$prototype instanceof self) {
             $prototype = new static();

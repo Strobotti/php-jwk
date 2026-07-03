@@ -165,7 +165,7 @@ abstract class AbstractKey implements KeyInterface
     /**
      * @since 1.0.0
      */
-    public static function createFromJSON(string $json, KeyInterface $prototype = null): KeyInterface
+    public static function createFromJSON(string $json, ?KeyInterface $prototype = null): KeyInterface
     {
         $assoc = \json_decode($json, true);
 
