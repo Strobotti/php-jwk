@@ -12,7 +12,7 @@ You can open [a new issue](https://github.com/Strobotti/php-jwk/issues) once you
 
 If you want to fix a bug or add a missing feature you can open a new pull-request.
 
-Please note that you need a PHP 7.3 or later for using this library (running the tests requires at least php 8.2).
+Please note that you need a PHP 7.3 or later for using this library.
 
 Basic steps:
 
