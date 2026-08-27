@@ -36,32 +36,52 @@ jobs:
 
 
   unit-tests:
-    name: Unit Tests
-    runs-on: ubuntu-latest
+    name: Unit Tests (PHP ${{ matrix.php-version }})
+    runs-on: ${{ matrix.operating-system }}
 
     needs:
       - dependency-validation
+
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-version: ['7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
 
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: ${{ matrix.php-version }}
+          extensions: json, openssl, xml
+          coverage: xdebug
 
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
       - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
-          path: /tmp/composer-cache
-          key: "${{ runner.os }}-${{ hashFiles('**/composer.lock') }}"
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: "${{ runner.os }}-php-${{ matrix.php-version }}-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "${{ runner.os }}-php-${{ matrix.php-version }}-"
 
-      - name: Install Composer
-        uses: php-actions/composer@v6
+      - name: Drop php-cs-fixer on PHP 7.3
+        if: matrix.php-version == '7.3'
+        run: composer remove --dev friendsofphp/php-cs-fixer --no-update
+
+      - name: Install dependencies with Composer
+        run: composer update --prefer-dist --no-ansi --no-interaction --no-progress
 
       - name: Run PHPUnit
         run: make test-unit
 
       - name: Run php-cs-fixer
+        if: matrix.php-version != '7.3'
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: 1
         run: make php-cs-fixer
