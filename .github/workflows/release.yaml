@@ -14,29 +14,30 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
+          extensions: json, openssl, xml
+          coverage: xdebug
 
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
 
       - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
-          path: /tmp/composer-cache
-          key: "${{ runner.os }}-${{ hashFiles('**/composer.lock') }}"
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: "${{ runner.os }}-php-8.3-${{ hashFiles('**/composer.lock') }}"
+          restore-keys: "${{ runner.os }}-php-8.3-"
 
-      - name: Install Composer
-        uses: php-actions/composer@v6
+      - name: Install dependencies with Composer
+        run: composer install --prefer-dist --no-ansi --no-interaction --no-progress
 
       - name: Run PHPUnit
-        run: php -d xdebug.mode=coverage ./vendor/bin/phpunit
-
-      - name: Make Coverage Badge
-        uses: action-badges/cobertura-coverage-xml-badges@0.3.0
-        with:
-          file-name: coverage.svg
-          badge-branch: gh-pages
-          coverage-file-name: tests/coverage.latest/coverage.xml
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        run: make test-unit
 
       - name: Execute Semantic Release
         id: semantic
