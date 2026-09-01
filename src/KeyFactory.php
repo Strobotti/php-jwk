@@ -44,6 +44,8 @@ class KeyFactory
 
     /**
      * @since 1.0.0
+     *
+     * @param array<string, mixed> $options
      */
     public function createFromPem(string $pem, array $options = []): KeyInterface
     {

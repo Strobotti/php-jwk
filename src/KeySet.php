@@ -12,26 +12,15 @@ use Strobotti\JWK\Key\KeyInterface;
  *
  * @see    https://github.com/Strobotti/php-jwk
  * @since 1.0.0
+ *
+ * @implements \IteratorAggregate<int, KeyInterface>
  */
 class KeySet implements \JsonSerializable, \Countable, \IteratorAggregate
 {
     /**
-     * @var KeyFactory
-     */
-    private $keyFactory;
-
-    /**
      * @var KeyInterface[]
      */
     private $keys = [];
-
-    /**
-     * KeySet constructor.
-     */
-    public function __construct()
-    {
-        $this->setKeyFactory(new KeyFactory());
-    }
 
     /**
      * @since 1.0.0
@@ -39,16 +28,6 @@ class KeySet implements \JsonSerializable, \Countable, \IteratorAggregate
     public function __toString(): string
     {
         return (string) \json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
-    }
-
-    /**
-     * @since 1.0.0
-     */
-    public function setKeyFactory(KeyFactory $keyFactory): self
-    {
-        $this->keyFactory = $keyFactory;
-
-        return $this;
     }
 
     /**
@@ -127,6 +106,8 @@ class KeySet implements \JsonSerializable, \Countable, \IteratorAggregate
 
     /**
      * @since 1.3.0
+     *
+     * @return \ArrayIterator<int, KeyInterface>
      */
     public function getIterator(): \ArrayIterator
     {

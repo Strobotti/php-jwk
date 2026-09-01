@@ -70,7 +70,7 @@ class Rsa extends AbstractKey
     }
 
     /**
-     * Returns the modulus for the RSA public key, ie. the `n`field.
+     * Returns the modulus for the RSA public key, ie. the `n` field.
      *
      * @since 1.0.0
      */
@@ -94,18 +94,15 @@ class Rsa extends AbstractKey
     }
 
     /**
-     * {@inheritdoc}
+     * Creates an Rsa key instance from a JSON string.
      *
      * @since 1.0.0
-     *
-     * @return self
      */
-    public static function createFromJSON(string $json, ?KeyInterface $prototype = null): KeyInterface
+    public static function createFromJSON(string $json, ?KeyInterface $prototype = null): self
     {
-        if (!$prototype instanceof self) {
-            $prototype = new static();
-        }
+        $prototype = $prototype instanceof self ? $prototype : new self();
 
+        /** @var self $instance */
         $instance = parent::createFromJSON($json, $prototype);
 
         $assoc = \json_decode($json, true);

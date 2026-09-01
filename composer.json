@@ -36,7 +36,7 @@
     "ext-xml": "*",
     "phpunit/phpunit": "^9.6 || ^10.0",
     "friendsofphp/php-cs-fixer": "3.54.0",
-    "phpstan/phpstan": "^1.12"
+    "phpstan/phpstan": "^2.2"
   },
   "scripts": {
     "test": "./vendor/bin/phpunit"
