@@ -171,7 +171,7 @@ abstract class AbstractKey implements KeyInterface
     public static function createFromJSON(string $json, ?KeyInterface $prototype = null): KeyInterface
     {
         if (null === $prototype) {
-            throw new \InvalidArgumentException('A prototype instance must be provided when calling createFromJSON on AbstractKey.');
+            $prototype = new static();
         }
 
         $assoc = \json_decode($json, true);
