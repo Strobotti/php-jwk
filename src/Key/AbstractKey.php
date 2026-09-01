@@ -168,8 +168,12 @@ abstract class AbstractKey implements KeyInterface
      *
      * @since 1.0.0
      */
-    public static function createFromJSON(string $json, KeyInterface $prototype): KeyInterface
+    public static function createFromJSON(string $json, ?KeyInterface $prototype = null): KeyInterface
     {
+        if (null === $prototype) {
+            throw new \InvalidArgumentException('A prototype instance must be provided when calling createFromJSON on AbstractKey.');
+        }
+
         $assoc = \json_decode($json, true);
 
         $instance = clone $prototype;
