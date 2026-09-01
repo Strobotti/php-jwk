@@ -18,7 +18,7 @@ abstract class AbstractKey implements KeyInterface
      *
      * @var string
      */
-    private $kty;
+    private $kty = '';
 
     /**
      * The key ID.
@@ -39,16 +39,14 @@ abstract class AbstractKey implements KeyInterface
      *
      * @var string
      */
-    private $alg;
+    private $alg = '';
 
     /**
      * @since 1.0.0
-     *
-     * @return false|string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return \json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
+        return (string) \json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
     }
 
     /**
@@ -145,7 +143,7 @@ abstract class AbstractKey implements KeyInterface
      *
      * @since 1.0.0
      *
-     * @return array An assoc to be passed to json_encode
+     * @return array<string, mixed> An assoc to be passed to json_encode
      */
     public function jsonSerialize(): array
     {
@@ -173,6 +171,10 @@ abstract class AbstractKey implements KeyInterface
             $instance = clone $prototype;
         } else {
             $instance = new static();
+        }
+
+        if (!\is_array($assoc)) {
+            return $instance;
         }
 
         foreach ($assoc as $key => $value) {

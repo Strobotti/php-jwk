@@ -35,12 +35,10 @@ class KeySet implements \JsonSerializable, \Countable, \IteratorAggregate
 
     /**
      * @since 1.0.0
-     *
-     * @return false|string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return \json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
+        return (string) \json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
     }
 
     /**
@@ -103,13 +101,15 @@ class KeySet implements \JsonSerializable, \Countable, \IteratorAggregate
 
     /**
      * @since 1.0.0
+     *
+     * @return array<string, mixed>
      */
     public function jsonSerialize(): array
     {
         $ret = [];
 
         foreach ($this->getKeys() as $key) {
-            $ret[$key->getKeyId()] = $key->jsonSerialize();
+            $ret[$key->getKeyId() ?? ''] = $key->jsonSerialize();
         }
 
         return [

@@ -47,7 +47,17 @@ class KeyFactory
      */
     public function createFromPem(string $pem, array $options = []): KeyInterface
     {
-        $keyInfo = \openssl_pkey_get_details(\openssl_pkey_get_public($pem));
+        $publicKey = \openssl_pkey_get_public($pem);
+
+        if ($publicKey === false) {
+            throw new \InvalidArgumentException('Failed to read the provided PEM: ' . \openssl_error_string());
+        }
+
+        $keyInfo = \openssl_pkey_get_details($publicKey);
+
+        if ($keyInfo === false) {
+            throw new \InvalidArgumentException('Failed to extract key details from the provided PEM');
+        }
 
         $jsonData = \array_merge(
             $options,
@@ -58,8 +68,14 @@ class KeyFactory
             ]
         );
 
+        $encoded = \json_encode($jsonData);
+
+        if ($encoded === false) {
+            throw new \RuntimeException('Failed to JSON-encode the key data');
+        }
+
         // TODO Only RSA is supported atm
-        return Key\Rsa::createFromJSON(\json_encode($jsonData));
+        return Key\Rsa::createFromJSON($encoded);
     }
 
     /**

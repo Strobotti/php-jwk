@@ -21,10 +21,8 @@ interface Base64UrlConverterInterface
      * Decodes Base64url formatted data to a string.
      *
      * @since 1.0.0
-     *
-     * @param bool $strict
      */
-    public function decode(string $data, $strict = false): string;
+    public function decode(string $data, bool $strict = false): string;
 
     /**
      * Encodes a string to a base64url formatted data.

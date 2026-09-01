@@ -10,8 +10,6 @@ namespace Strobotti\JWK\Key;
  *
  * @see    https://github.com/Strobotti/php-jwk
  * @since 1.0.0
- *
- * @method array jsonSerialize()
  */
 interface KeyInterface extends \JsonSerializable
 {
@@ -43,10 +41,8 @@ interface KeyInterface extends \JsonSerializable
      * Converts this key to a string.
      *
      * @since 1.0.0
-     *
-     * @return bool|string
      */
-    public function __toString();
+    public function __toString(): string;
 
     /**
      * Sets the key type, ie. the value for the `kty` field.

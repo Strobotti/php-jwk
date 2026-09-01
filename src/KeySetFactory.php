@@ -45,12 +45,18 @@ class KeySetFactory
 
         $instance = new KeySet();
 
-        if (! is_array($assoc) || ! array_key_exists('keys', $assoc)) {
+        if (!\is_array($assoc) || !\array_key_exists('keys', $assoc)) {
             return $instance;
         }
 
         foreach ($assoc['keys'] as $keyData) {
-            $key = $this->keyFactory->createFromJson(\json_encode($keyData));
+            $encoded = \json_encode($keyData);
+
+            if ($encoded === false) {
+                continue;
+            }
+
+            $key = $this->keyFactory->createFromJson($encoded);
 
             $instance->addKey($key);
         }
