@@ -163,19 +163,22 @@ abstract class AbstractKey implements KeyInterface
     /**
      * Populates a given $prototype instance from a JSON string.
      *
-     * The caller is responsible for providing a concrete prototype so that
-     * this abstract class never needs to instantiate itself via new static().
+     * When no prototype is provided, the concrete subclass is instantiated
+     * via new static() so the returned object matches the called class.
      *
      * @since 1.0.0
+     *
+     * @return static
      */
     public static function createFromJSON(string $json, ?KeyInterface $prototype = null): KeyInterface
     {
         if (null === $prototype) {
-            $prototype = new static();
+            $prototype = new static(); // @phpstan-ignore new.static
         }
 
         $assoc = \json_decode($json, true);
 
+        /** @var static $instance */
         $instance = clone $prototype;
 
         if (!\is_array($assoc)) {

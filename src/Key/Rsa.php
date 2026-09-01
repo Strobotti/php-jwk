@@ -97,12 +97,14 @@ class Rsa extends AbstractKey
      * Creates an Rsa key instance from a JSON string.
      *
      * @since 1.0.0
+     *
+     * @return static
      */
-    public static function createFromJSON(string $json, ?KeyInterface $prototype = null): static
+    public static function createFromJSON(string $json, ?KeyInterface $prototype = null): self
     {
         $prototype = $prototype instanceof self ? $prototype : new self();
 
-        /** @var self $instance */
+        /** @var static $instance */
         $instance = parent::createFromJSON($json, $prototype);
 
         $assoc = \json_decode($json, true);
