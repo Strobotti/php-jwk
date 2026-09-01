@@ -1,6 +1,9 @@
 test-unit:
 	php -d xdebug.mode=coverage ./vendor/bin/phpunit
 
+phpstan:
+	./vendor/bin/phpstan analyse --no-progress
+
 php-cs-fixer:
 	./vendor/bin/php-cs-fixer fix --verbose --dry-run --show-progress none --config .php_cs.php
 

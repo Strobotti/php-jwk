@@ -2,7 +2,10 @@
   "name": "strobotti/php-jwk",
   "description": "A small PHP library to handle JWKs (Json Web Keys)",
   "type": "library",
-  "keywords": ["jwk", "jwks"],
+  "keywords": [
+    "jwk",
+    "jwks"
+  ],
   "homepage": "https://github.com/Strobotti/php-jwk",
   "authors": [
     {
@@ -32,7 +35,8 @@
   "require-dev": {
     "ext-xml": "*",
     "phpunit/phpunit": "^9.6 || ^10.0",
-    "friendsofphp/php-cs-fixer": "3.54.0"
+    "friendsofphp/php-cs-fixer": "3.54.0",
+    "phpstan/phpstan": "^1.12"
   },
   "scripts": {
     "test": "./vendor/bin/phpunit"

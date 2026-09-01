@@ -36,6 +36,42 @@ jobs:
         run: composer install --no-ansi --dry-run
 
 
+  static-analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    needs:
+      - dependency-validation
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: json, openssl, xml
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: "${{ runner.os }}-php-8.3-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "${{ runner.os }}-php-8.3-"
+
+      - name: Install dependencies with Composer
+        run: composer update --prefer-dist --no-ansi --no-interaction --no-progress
+
+      - name: Run PHPStan
+        run: make phpstan
+
+
   unit-tests:
     name: Unit Tests (PHP ${{ matrix.php-version }})
     runs-on: ${{ matrix.operating-system }}
