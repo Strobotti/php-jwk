@@ -98,7 +98,7 @@ class Rsa extends AbstractKey
      *
      * @since 1.0.0
      */
-    public static function createFromJSON(string $json, ?KeyInterface $prototype = null): self
+    public static function createFromJSON(string $json, ?KeyInterface $prototype = null): static
     {
         $prototype = $prototype instanceof self ? $prototype : new self();
 
