@@ -9,6 +9,10 @@ jobs:
   release:
     name: Semantic Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -42,5 +46,9 @@ jobs:
       - name: Execute Semantic Release
         id: semantic
         uses: cycjimmy/semantic-release-action@v4
+        with:
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
