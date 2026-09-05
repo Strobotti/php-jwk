@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c63ee547f5ba44b4a9d5fcd32a76bc6",
+    "content-hash": "b15430611f6abb8a525cce33efdfed76",
     "packages": [
         {
             "name": "paragonie/constant_time_encoding",
@@ -786,11 +786,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.12",
+            "version": "2.2.13",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/174b0d88710f00a42598886504dd7a146f91ace5",
-                "reference": "174b0d88710f00a42598886504dd7a146f91ace5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9ba9ac76ee9c5cf5b56d58eb5deec6315b7a0260",
+                "reference": "9ba9ac76ee9c5cf5b56d58eb5deec6315b7a0260",
                 "shasum": ""
             },
             "require": {
@@ -846,7 +846,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-31T19:09:43+00:00"
+            "time": "2026-09-03T20:38:19+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3776,7 +3776,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.3.0",
+        "php": ">=7.4.0",
         "ext-json": "*",
         "ext-openssl": "*"
     },
