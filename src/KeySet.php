@@ -12,45 +12,22 @@ use Strobotti\JWK\Key\KeyInterface;
  *
  * @see    https://github.com/Strobotti/php-jwk
  * @since 1.0.0
+ *
+ * @implements \IteratorAggregate<int, KeyInterface>
  */
 class KeySet implements \JsonSerializable, \Countable, \IteratorAggregate
 {
-    /**
-     * @var KeyFactory
-     */
-    private $keyFactory;
-
     /**
      * @var KeyInterface[]
      */
     private $keys = [];
 
     /**
-     * KeySet constructor.
-     */
-    public function __construct()
-    {
-        $this->setKeyFactory(new KeyFactory());
-    }
-
-    /**
-     * @since 1.0.0
-     *
-     * @return false|string
-     */
-    public function __toString()
-    {
-        return \json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
-    }
-
-    /**
      * @since 1.0.0
      */
-    public function setKeyFactory(KeyFactory $keyFactory): self
+    public function __toString(): string
     {
-        $this->keyFactory = $keyFactory;
-
-        return $this;
+        return (string) \json_encode($this->jsonSerialize(), JSON_PRETTY_PRINT);
     }
 
     /**
@@ -103,13 +80,15 @@ class KeySet implements \JsonSerializable, \Countable, \IteratorAggregate
 
     /**
      * @since 1.0.0
+     *
+     * @return array<string, mixed>
      */
     public function jsonSerialize(): array
     {
         $ret = [];
 
         foreach ($this->getKeys() as $key) {
-            $ret[$key->getKeyId()] = $key->jsonSerialize();
+            $ret[$key->getKeyId() ?? ''] = $key->jsonSerialize();
         }
 
         return [
@@ -127,6 +106,8 @@ class KeySet implements \JsonSerializable, \Countable, \IteratorAggregate
 
     /**
      * @since 1.3.0
+     *
+     * @return \ArrayIterator<int, KeyInterface>
      */
     public function getIterator(): \ArrayIterator
     {

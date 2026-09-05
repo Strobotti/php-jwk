@@ -20,11 +20,17 @@ class Base64UrlConverter implements Base64UrlConverterInterface
     /**
      * {@inheritdoc}
      */
-    public function decode(string $data, $strict = false): string
+    public function decode(string $data, bool $strict = false): string
     {
         $b64 = \strtr($data, '-_', '+/');
 
-        return \base64_decode($b64, $strict);
+        $decoded = \base64_decode($b64, $strict);
+
+        if ($decoded === false) {
+            throw new \InvalidArgumentException('Failed to base64-decode the provided data');
+        }
+
+        return $decoded;
     }
 
     /**

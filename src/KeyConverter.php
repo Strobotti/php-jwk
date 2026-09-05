@@ -44,8 +44,14 @@ class KeyConverter
 
         $modulus = $this->base64UrlConverter->decode($key->getModulus(), true);
 
+        $exponent = \base64_decode($key->getExponent(), true);
+
+        if ($exponent === false) {
+            throw new \InvalidArgumentException('Failed to base64-decode the key exponent');
+        }
+
         $rsa = PublicKeyLoader::load([
-            'e' => new BigInteger(\base64_decode($key->getExponent(), true), 256),
+            'e' => new BigInteger($exponent, 256),
             'n' => new BigInteger($modulus, 256),
         ]);
 
