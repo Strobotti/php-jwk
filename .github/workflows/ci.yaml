@@ -46,7 +46,7 @@ jobs:
       fail-fast: false
       matrix:
         operating-system: [ubuntu-latest]
-        php-version: ['7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
+        php-version: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
 
     steps:
       - name: Setup PHP
@@ -70,10 +70,6 @@ jobs:
           key: "${{ runner.os }}-php-${{ matrix.php-version }}-${{ hashFiles('**/composer.json') }}"
           restore-keys: "${{ runner.os }}-php-${{ matrix.php-version }}-"
 
-      - name: Drop php-cs-fixer on PHP 7.3
-        if: matrix.php-version == '7.3'
-        run: composer remove --dev friendsofphp/php-cs-fixer --no-update
-
       - name: Install dependencies with Composer
         run: composer update --prefer-dist --no-ansi --no-interaction --no-progress
 
@@ -81,7 +77,6 @@ jobs:
         run: make test-unit
 
       - name: Run php-cs-fixer
-        if: matrix.php-version != '7.3'
         env:
           PHP_CS_FIXER_IGNORE_ENV: 1
         run: make php-cs-fixer
